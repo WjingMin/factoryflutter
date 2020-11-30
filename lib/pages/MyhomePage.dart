@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import './forget.dart';
 import './tailoring.dart';
+import './authority.dart';
 
 class MyhomePage extends StatefulWidget {
   int type;
@@ -12,6 +13,7 @@ class MyhomePage extends StatefulWidget {
 
 class _MyhomePageState extends State<MyhomePage> {
   bool passwordVisible;
+  String userName;
   @override
   void initState() {
     passwordVisible = true;
@@ -61,6 +63,12 @@ class _MyhomePageState extends State<MyhomePage> {
               height: 100.h,
               color: Color.fromRGBO(0, 0, 0, 0.05),
               child: TextField(
+                onChanged: (value) {
+                  print(value);
+                  setState(() {
+                    this.userName = value;
+                  });
+                },
                 style: TextStyle(
                     textBaseline: TextBaseline.alphabetic, color: Colors.black),
                 maxLines: 1,
@@ -120,7 +128,14 @@ class _MyhomePageState extends State<MyhomePage> {
                 ),
               ),
             ),
-
+            SizedBox(height: 20.h),
+            Container(
+              width: 900.w,
+              child: Text(
+                'Tips:用户名1进入操作裁剪，用户名2进入裁剪班组',
+                textAlign: TextAlign.right,
+              ),
+            ),
             SizedBox(height: 60.h),
             Container(
                 width: 900.w,
@@ -137,12 +152,21 @@ class _MyhomePageState extends State<MyhomePage> {
                   ),
                   onPressed: () {
                     // ...
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => tailoring(),
-                      ),
-                    );
+                    if (this.userName == '1') {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => tailoring(),
+                        ),
+                      );
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => authority(),
+                        ),
+                      );
+                    }
                   },
                 ))
           ],

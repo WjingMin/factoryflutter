@@ -1,25 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-//*******裁剪操机页面的组件封装**********/
-// Tab(text: '生产订单'), //type ===1
-// Tab(text: '待审核'), //type ===2
-// Tab(text: '审核不通过'), //type ===3
-//*******裁剪操机页面的组件封装**********/
-
-class tailoringCom extends StatefulWidget {
+class authorityCom extends StatefulWidget {
   int type = 0;
-  tailoringCom({this.type});
-  // tailoringCom({this.type});
-  // tailoringCom({Key key}) : super(key: key);
-
+  authorityCom({this.type});
   @override
-  _tailoringComState createState() => _tailoringComState();
+  _authorityComState createState() => _authorityComState();
 }
 
-class _tailoringComState extends State<tailoringCom> {
+class _authorityComState extends State<authorityCom> {
   int mytype;
   int boxNumber = 1;
   @override
@@ -32,8 +22,6 @@ class _tailoringComState extends State<tailoringCom> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        // width: double.infinity,
-        // color: Color.fromRGBO(242, 242, 242, 1),
         child: EasyRefresh(
       footer: ClassicalFooter(
           loadText: '加载loadtest',
@@ -288,11 +276,31 @@ class _tailoringComState extends State<tailoringCom> {
                       ],
                     ),
                     SizedBox(height: 20.h),
+                    this.mytype == 1
+                        ? Container(
+                            width: 900.w,
+                            height: 90.h,
+                            child: new MaterialButton(
+                              shape: RoundedRectangleBorder(
+                                  side: BorderSide.none,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20.w))),
+                              color: Color.fromRGBO(96, 208, 72, 1),
+                              textColor: Colors.white,
+                              child: new Text(
+                                '申请领料',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              onPressed: () {
+                                // ...
+                              },
+                            ))
+                        : Container(),
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 20.h),
+            SizedBox(height: 15.h),
             this.mytype == 3
                 ? ClipRRect(
                     borderRadius: BorderRadius.circular(20.w),
@@ -303,224 +311,65 @@ class _tailoringComState extends State<tailoringCom> {
                       child: Column(
                         children: [
                           Row(children: [
-                            Text(
-                              '审核情况',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w600),
-                            )
-                          ]),
-                          SizedBox(height: 15.h),
-                          Row(children: [
-                            Expanded(child: Text('审核班组:'), flex: 1),
-                            Expanded(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [Text('班组名称')],
-                                ),
-                                flex: 3)
-                          ]),
-                          SizedBox(height: 15.h),
-                          Row(children: [
-                            Expanded(child: Text('审核时间:'), flex: 1),
-                            Expanded(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [Text('2020 11/30 12:00:00')],
-                                ),
-                                flex: 3)
-                          ]),
-                          SizedBox(height: 15.h),
-                          Row(children: [
-                            Expanded(child: Text('审核原因:'), flex: 1),
                             Expanded(
                                 child: Text(
-                                    '审核原因审核审核原因审核审核原因审核审核原因审核审核原因审核审核原因审核',
-                                    textAlign: TextAlign.right),
-                                flex: 3)
-                          ])
-                        ],
-                      ),
-                    ),
-                  )
-                : Container(),
-            SizedBox(height: 20.h),
-
-            this.mytype == 1
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(20.w),
-                    child: Container(
-                      width: 1030.w,
-                      // height: 200.h,
-                      color: Colors.white,
-                      padding: EdgeInsets.all(30.w),
-                      child: Column(
-                        children: [
-                          Row(children: [
-                            Text(
-                              '生产情况录入',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w600),
-                            ),
-                          ]),
-                          SizedBox(height: 10.h),
-                          Row(
-                            children: [
-                              Expanded(child: Text('开始生产时间:'), flex: 1),
-                              Expanded(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    FlatButton(
-                                        onPressed: () {
-                                          DatePicker.showDatePicker(context,
-                                              // 是否展示顶部操作按钮
-                                              showTitleActions: true,
-                                              // 最小时间
-                                              minTime: DateTime(2018, 3, 5),
-                                              // 最大时间
-                                              maxTime: DateTime(2099, 6, 7),
-                                              // change事件
-                                              onChanged: (date) {
-                                            print('change $date');
-                                          },
-                                              // 确定事件
-                                              onConfirm: (date) {
-                                            print('confirm $date');
-                                          },
-                                              // 当前时间
-                                              currentTime: DateTime.now(),
-                                              // 语言
-                                              locale: LocaleType.zh);
-                                        },
-                                        child: Text(
-                                          '请选择开始生产时间',
-                                          style: TextStyle(color: Colors.grey),
-                                        )),
-                                    Icon(Icons.arrow_right)
-                                  ],
+                                  '审批情况',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600),
                                 ),
-                                flex: 3,
-                              )
-                            ],
-                          ),
-                          // SizedBox(height: 15.h),
-                          Row(
-                            children: [
-                              Expanded(child: Text('结束生产时间:'), flex: 1),
-                              Expanded(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    FlatButton(
-                                        onPressed: () {
-                                          DatePicker.showDatePicker(context,
-                                              // 是否展示顶部操作按钮
-                                              showTitleActions: true,
-                                              // 最小时间
-                                              minTime: DateTime(2018, 3, 5),
-                                              // 最大时间
-                                              maxTime: DateTime(2099, 6, 7),
-                                              // change事件
-                                              onChanged: (date) {
-                                            print('change $date');
-                                          },
-                                              // 确定事件
-                                              onConfirm: (date) {
-                                            print('confirm $date');
-                                          },
-                                              // 当前时间
-                                              currentTime: DateTime.now(),
-                                              // 语言
-                                              locale: LocaleType.zh);
-                                        },
-                                        child: Text(
-                                          '请选择结束生产时间',
-                                          style: TextStyle(color: Colors.grey),
-                                        )),
-                                    Icon(Icons.arrow_right)
-                                  ],
-                                ),
-                                flex: 3,
-                              )
-                            ],
-                          ),
-                          SizedBox(height: 20.h),
-
-                          Row(
-                            children: [
-                              Expanded(child: Text('裁剪数量:'), flex: 1),
-                              Expanded(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.only(right: 33.w),
-                                        width: 500.w,
-                                        height: 80.w,
-                                        child: TextField(
-                                          maxLines: 1,
-                                          textAlign: TextAlign.right,
-                                          decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintText: '请输入裁剪数量',
-                                              hintStyle:
-                                                  TextStyle(fontSize: 15)),
-                                        ),
-                                      ),
-                                      Icon(Icons.arrow_right)
-                                    ],
-                                  ),
-                                  flex: 3)
-                            ],
-                          ),
-                          SizedBox(height: 20.h),
-                          Row(children: [
-                            Text(
-                              '铁皮卷号1:',
-                              textAlign: TextAlign.left,
-                            ),
-                          ]),
-                          SizedBox(height: 20.h),
-
-                          Row(children: [
+                                flex: 1),
                             Expanded(
-                                child: Wrap(
-                                    spacing: 10, //主轴上子控件的间距
-                                    runSpacing: 8, //交叉轴上子控件之间的间距
-                                    children: Boxs() //要显示的子控件集合
-                                    ),
+                                child: Text(
+                                  '2020 11/30 12:00:00',
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                ),
                                 flex: 1)
                           ]),
-
                           SizedBox(height: 20.h),
-                          // SizedBox(height: 20.h),
-                          Container(
+                          Row(
+                            children: [
+                              ClipOval(
+                                  child: Image.network(
+                                      'https://tfs.alipayobjects.com/images/partner/TB1LX8pXlaEMeJjme5tXXcEKFXa',
+                                      width: 130.w,
+                                      height: 130.w)),
+                              SizedBox(width: 20.w),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '班组姓名',
+                                  ),
+                                  SizedBox(height: 10.h),
+                                  Text('18060918076')
+                                ],
+                              )
+                            ],
+                          ),
+                          SizedBox(height: 15.h),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(20.w),
+                            child: Container(
                               width: 900.w,
-                              height: 90.h,
-                              child: new MaterialButton(
-                                shape: RoundedRectangleBorder(
-                                    side: BorderSide.none,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(20.w))),
-                                color: Color.fromRGBO(96, 208, 72, 1),
-                                textColor: Colors.white,
-                                child: new Text(
-                                  '立即提交',
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                                onPressed: () {
-                                  // ...
-                                },
-                              )),
-                          SizedBox(height: 20.h),
+                              // height: 200.w,
+                              padding: EdgeInsets.all(10.w),
+                              color: Colors.grey,
+                              child: Text(
+                                  '审核为通过原因审核为通过原因审核为通过原因审核为通过原因审核为通过原因审核为通过原因',
+                                  style: TextStyle(color: Colors.white)),
+                            ),
+                          ),
                         ],
                       ),
                     ),
                   )
                 : Container(),
-            //待审核模块
+            SizedBox(height: 15.h),
             this.mytype == 2 || this.mytype == 3
                 ? ClipRRect(
                     borderRadius: BorderRadius.circular(20.w),
@@ -539,7 +388,28 @@ class _tailoringComState extends State<tailoringCom> {
                                   fontSize: 16, fontWeight: FontWeight.w600),
                             ),
                           ]),
-                          SizedBox(height: 10.h),
+                          SizedBox(height: 20.h),
+                          Row(
+                            children: [
+                              ClipOval(
+                                  child: Image.network(
+                                      'https://tfs.alipayobjects.com/images/partner/TB1LX8pXlaEMeJjme5tXXcEKFXa',
+                                      width: 130.w,
+                                      height: 130.w)),
+                              SizedBox(width: 20.w),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '员工姓名',
+                                  ),
+                                  SizedBox(height: 10.h),
+                                  Text('18060918076')
+                                ],
+                              )
+                            ],
+                          ),
+                          SizedBox(height: 20.h),
                           Row(
                             children: [
                               Expanded(child: Text('开始生产时间:'), flex: 1),
@@ -594,7 +464,54 @@ class _tailoringComState extends State<tailoringCom> {
                                     ),
                                 flex: 1)
                           ]),
-                          SizedBox(height: 20.h),
+                          SizedBox(height: 30.h),
+                          this.mytype == 2
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      width: 400.w,
+                                      height: 90.h,
+                                      child: new MaterialButton(
+                                        shape: RoundedRectangleBorder(
+                                            side: BorderSide.none,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(20.w))),
+                                        color: Colors.grey,
+                                        textColor: Colors.white,
+                                        child: new Text(
+                                          '审核不通过',
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                        onPressed: () {
+                                          // ...
+                                        },
+                                      ),
+                                    ),
+                                    SizedBox(width: 70.w),
+                                    Container(
+                                      width: 400.w,
+                                      height: 90.h,
+                                      child: new MaterialButton(
+                                        shape: RoundedRectangleBorder(
+                                            side: BorderSide.none,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(20.w))),
+                                        color: Color.fromRGBO(96, 208, 72, 1),
+                                        textColor: Colors.white,
+                                        child: new Text(
+                                          '审核通过',
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                        onPressed: () {
+                                          // ...
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                )
+                              : Container()
                         ],
                       ),
                     ),
@@ -605,24 +522,6 @@ class _tailoringComState extends State<tailoringCom> {
       ),
     ));
   }
-
-  List<Widget> Boxs() => List.generate(this.boxNumber, (index) {
-        return Container(
-            width: 300.w,
-            height: 100.w,
-            color: Colors.grey,
-            // alignment: Alignment.topLeft,
-            child: TextField(
-              textAlign: TextAlign.center,
-              decoration:
-                  InputDecoration(border: InputBorder.none, hintText: '请输入卷皮号'),
-              onEditingComplete: () {
-                setState(() {
-                  this.boxNumber++;
-                });
-              },
-            ));
-      });
 
   List<Widget> UnBoxs() => List.generate(10, (index) {
         return Container(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../compoments/tailoringCom.dart';
+import '../pages/search.dart';
 
 class tailoring extends StatefulWidget {
   tailoring({Key key}) : super(key: key);
@@ -65,27 +66,38 @@ class _tailoringState extends State<tailoring>
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 ClipRRect(
-                                    child: Container(
-                                      width: 200.w,
-                                      height: 90.w,
-                                      color: Color.fromRGBO(250, 250, 250, 0.3),
-                                      padding: EdgeInsets.all(20.w),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.search,
-                                            size: 18,
-                                            color: Colors.white,
-                                          ),
-                                          SizedBox(width: 10.w),
-                                          Text('搜索',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 35.w))
-                                        ],
+                                    child: GestureDetector(
+                                      child: Container(
+                                        width: 200.w,
+                                        height: 90.w,
+                                        color:
+                                            Color.fromRGBO(250, 250, 250, 0.3),
+                                        padding: EdgeInsets.all(20.w),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.search,
+                                              size: 18,
+                                              color: Colors.white,
+                                            ),
+                                            SizedBox(width: 10.w),
+                                            Text('搜索',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 35.w))
+                                          ],
+                                        ),
                                       ),
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => search(),
+                                          ),
+                                        );
+                                      },
                                     ),
                                     borderRadius: BorderRadius.circular(40.w)),
                               ],
