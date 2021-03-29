@@ -7,7 +7,7 @@ import './tailoring.dart';
 import './authority.dart';
 import '../apis/model/login.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/preferences.dart';
 
 class MyhomePage extends StatefulWidget {
@@ -173,26 +173,40 @@ class _MyhomePageState extends State<MyhomePage> {
     );
   }
 
+  _userInfo() async {
+    var data = await Login.userInfo();
+    print(data);
+  }
+
   _login() async {
     try {
-      await Login.login(this.userName, this.passWord).then((response) =>
-          Preferences.setStorage('accessToken', response.data['access_token']));
-      Fluttertoast.showToast(
-          msg: "登录成功!",
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Color.fromRGBO(0, 0, 0, 0.01),
-          textColor: Colors.green);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => tailoring(),
-        ),
-      );
+      var data = await Login.login(this.userName, this.passWord);
+      Preferences.setStorage(
+          'access_token', data.data['access_token'].toString());
+      this._userInfo();
+      if (data != null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => tailoring(),
+          ),
+        );
+      }
+      // await Login.login(this.userName, this.passWord).then((response) =>
+      // Preferences.setStorage('accessToken', response.data['access_token'])
+      // print(response));
+      // Fluttertoast.showToast(
+      //     msg: "登录成功!",
+      //     gravity: ToastGravity.CENTER,
+      //     backgroundColor: Color.fromRGBO(0, 0, 0, 0.01),
+      //     textColor: Colors.green);
+
     } catch (erro) {
-      var data = jsonDecode(erro.response.toString());
-      Fluttertoast.showToast(
-          msg: "登录失败!" + data['message'].toString(),
-          gravity: ToastGravity.CENTER);
+      print(erro);
+      // var data = jsonDecode(erro.response.toString());
+      // Fluttertoast.showToast(
+      //     msg: "登录失败!" + data['message'].toString(),
+      //     gravity: ToastGravity.CENTER);
     }
   }
 }

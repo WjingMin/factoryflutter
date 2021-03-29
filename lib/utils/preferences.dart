@@ -16,7 +16,6 @@ class Preferences {
   static Future<String> getStorage(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var value = prefs.getString(key);
-    print(value);
     return value;
   }
 

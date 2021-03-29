@@ -155,12 +155,12 @@ class _tailoringState extends State<tailoring>
   }
 
   _getList() async {
-    try {
-      await Construction.getConstructionList().then((value) => print(value));
-    } catch (error) {
-      print(error);
-      var data = jsonDecode(error.response.toString());
-      print(data);
-    }
+    // try {
+    //   await Construction.getConstructionList().then((value) => print(value));
+    // } catch (error) {
+    //   print(error);
+    //   var data = jsonDecode(error.response.toString());
+    //   print(data);
+    // }
   }
 }
