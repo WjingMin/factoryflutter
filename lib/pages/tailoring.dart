@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../compoments/tailoringCom.dart';
 import '../pages/search.dart';
+import '../apis/model/construction.dart';
 
 class tailoring extends StatefulWidget {
   tailoring({Key key}) : super(key: key);
@@ -20,6 +23,7 @@ class _tailoringState extends State<tailoring>
       length: 3,
       vsync: this,
     )..addListener(() {});
+    this._getList();
 
     super.initState();
   }
@@ -148,5 +152,15 @@ class _tailoringState extends State<tailoring>
             ],
           ),
         ));
+  }
+
+  _getList() async {
+    try {
+      await Construction.getConstructionList().then((value) => print(value));
+    } catch (error) {
+      print(error);
+      var data = jsonDecode(error.response.toString());
+      print(data);
+    }
   }
 }

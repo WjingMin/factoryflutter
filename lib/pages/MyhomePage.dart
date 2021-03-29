@@ -1,8 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import './forget.dart';
 import './tailoring.dart';
 import './authority.dart';
+import '../apis/model/login.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../utils/preferences.dart';
 
 class MyhomePage extends StatefulWidget {
   int type;
@@ -14,6 +20,7 @@ class MyhomePage extends StatefulWidget {
 class _MyhomePageState extends State<MyhomePage> {
   bool passwordVisible;
   String userName;
+  String passWord;
   @override
   void initState() {
     passwordVisible = true;
@@ -85,6 +92,11 @@ class _MyhomePageState extends State<MyhomePage> {
                 height: 100.h,
                 color: Color.fromRGBO(0, 0, 0, 0.05),
                 child: TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      this.passWord = value;
+                    });
+                  },
                   obscureText: passwordVisible,
                   style: TextStyle(
                       textBaseline: TextBaseline.alphabetic,
@@ -152,26 +164,35 @@ class _MyhomePageState extends State<MyhomePage> {
                   ),
                   onPressed: () {
                     // ...
-                    if (this.userName == '1') {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => tailoring(),
-                        ),
-                      );
-                    } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => authority(),
-                        ),
-                      );
-                    }
+                    this._login();
                   },
                 ))
           ],
         ),
       ),
     );
+  }
+
+  _login() async {
+    try {
+      await Login.login(this.userName, this.passWord).then((response) =>
+          Preferences.setStorage('accessToken', response.data['access_token']));
+      Fluttertoast.showToast(
+          msg: "登录成功!",
+          gravity: ToastGravity.CENTER,
+          backgroundColor: Color.fromRGBO(0, 0, 0, 0.01),
+          textColor: Colors.green);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => tailoring(),
+        ),
+      );
+    } catch (erro) {
+      var data = jsonDecode(erro.response.toString());
+      Fluttertoast.showToast(
+          msg: "登录失败!" + data['message'].toString(),
+          gravity: ToastGravity.CENTER);
+    }
   }
 }
