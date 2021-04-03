@@ -57,14 +57,15 @@ class HttpManager {
         // 判断是否存在token
         if (access_token != null) {
           // token存在则在请求头中加入token验证
-          options.headers['authorization'] = 'Bearer ' + access_token;
+          options.headers['authorization'] = 'Bearer $access_token';
         }
       } catch (e) {
         print("获取缓存token失败");
       }
       return options;
     }, onResponse: (Response response) {
-      print("在响应之前的拦截信息");
+      // print("在响应之前的拦截信息");
+      print('在响应之前的拦截信息===>$response');
       return response;
     }, onError: (DioError e) {
       print("在错误之前的拦截信息");
@@ -184,11 +185,7 @@ class HttpManager {
       );
     } else if (e.type == DioErrorType.RESPONSE) {
       Fluttertoast.showToast(
-        msg: '错误码:' +
-            data['code'].toString() +
-            ',' +
-            '提示:' +
-            data['message'].toString(),
+        msg: '错误码:${data['code']},提示:${data['message']}',
         gravity: ToastGravity.CENTER,
       );
     } else if (e.type == DioErrorType.CANCEL) {

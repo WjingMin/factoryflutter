@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import './forget.dart';
 import './tailoring.dart';
 import './authority.dart';
+import 'construction/index.dart';
 import '../apis/model/login.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
@@ -188,7 +189,7 @@ class _MyhomePageState extends State<MyhomePage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => tailoring(),
+            builder: (context) => Index(),
           ),
         );
       }
